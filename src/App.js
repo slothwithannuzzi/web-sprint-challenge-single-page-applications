@@ -7,6 +7,8 @@ import PizzaForm from './components/PizzaForm'
 import { schema } from './components/formSchema'
 
 const initialValues = {
+  //name for order
+  name: '',
   //dropdown
   size: '',
   //radio buttons
@@ -27,7 +29,6 @@ const initialErrors = {
   size: '',
   sauce: '',
 }
-const initialPizzas = [];
 
 const initialDisabled = true;
 
@@ -36,7 +37,7 @@ const App = () => {
   const [values, setValues] = useState(initialValues)
   const [errors, setErrors] = useState(initialErrors)
   const [disabled, setDisabled] = useState(initialDisabled)
-  const [pizzas, setPizzas] = useState(initialPizzas)
+  const [pizzas, setPizzas] = useState([]);
 
   const inputChange = (name, value) => {
     yup.reach(schema, name)
@@ -54,14 +55,16 @@ const App = () => {
       [name]: value
     })
   }
-  const addOrder = (order) => {
-    setPizzas(...pizzas, order)
+  const addOrder = order => {
+    setPizzas([...pizzas, order])
   }
 
   const formSubmit = () => {
     const toppings = []
     Object.keys(values)
-    .filter(key => key == 'pepperoni' || key == 'sausage' || key == 'jalapeno' || key == 'goatCheese' || key == 'bacon' || key =='anchovies')
+    .filter(key => key == 'pepperoni' || key == 'sausage' || 
+    key == 'jalapeno' || key == 'goatCheese' || 
+    key == 'bacon' || key =='anchovies')
     .forEach(key => {
       const value = values[key]
       if(value) {
@@ -69,6 +72,7 @@ const App = () => {
       }
     })
     const newPizza = {
+      name: values.name,
       size: values.size,
       sauce: values.sauce,
       glutenFree: values.glutenFree,
@@ -77,9 +81,14 @@ const App = () => {
     }
     addOrder(newPizza)
     console.log(newPizza)
-    console.log(pizzas);
+    console.log(pizzas)
     setValues(initialValues)
   }
+
+  useEffect(() => {
+    schema.isValid(values)
+    .then(valid => setDisabled(!valid))
+  }, [values])
 
   return (
    <div>
@@ -96,7 +105,7 @@ const App = () => {
         <Home/>
       </Route>
       <Route path = '/pizza'>
-        <PizzaForm values = {values} change ={inputChange} submit = {formSubmit}/>
+        <PizzaForm values = {values} change ={inputChange} submit = {formSubmit} disabled = {disabled} errors = {errors}/>
       </Route>
     </Switch>
 

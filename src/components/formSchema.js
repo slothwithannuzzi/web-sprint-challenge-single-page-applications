@@ -10,5 +10,6 @@ export const schema = yup.object().shape({
     bacon: yup.boolean(),
     anchovies: yup.boolean(),
     glutenFree: yup.boolean(),
-    instructions: yup.string()
+    instructions: yup.string(),
+    name: yup.string().min(2, "Must be 2 or more letters long").required()
 })

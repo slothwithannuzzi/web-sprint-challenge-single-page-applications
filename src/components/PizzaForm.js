@@ -30,7 +30,7 @@ export default function PizzaForm(props) {
             <form className = 'pizza-form' onSubmit = {onSubmit}>
                 <h3>Choice of Size:</h3>
                 <label>
-                    <select onChange = {onChange} value = {values.size} name = 'size'>
+                    <select id = 'size-dropdown' onChange = {onChange} value = {values.size} name = 'size'>
                         <option value = ''>- Select an option -</option>
                         <option value = 'small'>Small - 10"</option>
                         <option value = 'medium'>Medium - 12"</option>
@@ -40,7 +40,7 @@ export default function PizzaForm(props) {
                 </label>
                 <h3>Choice of Sauce:</h3>
                 <label>
-                    <input type = 'radio' value = 'original-red' name = 'sauce' onChange = {onChange}/>
+                    <input type = 'radio' value = 'original-red' name = 'sauce'  onChange = {onChange}/>
                     Original Red
                 </label>
                 <label>
@@ -88,11 +88,15 @@ export default function PizzaForm(props) {
                     <input type = 'checkbox' name = 'glutenFree' onChange = {onChange}/>
                     Gluten Free Crust (+ $1.00)
                 </label>
+                <h3>Name for your order</h3>
+                <label>
+                    <input type ='text' name = 'name' value = {values.name} onChange = {onChange} />
+                </label>
                 <h3>Special Instructions</h3>
                 <label>
-                    <input id = 'special-text' type= 'text' name ='instructions' onChange = {onChange}/>
+                    <input id = 'special-text' type= 'text' name ='instructions' value = {values.instructions} onChange = {onChange}/>
                 </label>
-                <button>Add to Order</button>
+                <button id = 'order-button' disabled = {disabled}>Add to Order</button>
             </form>
         </div>
     )
