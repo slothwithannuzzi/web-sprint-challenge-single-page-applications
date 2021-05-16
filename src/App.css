@@ -74,7 +74,7 @@ h1 {
   width: 200px;
 }
 
-.pizza-form {
+#pizza-form {
   display:flex;
   flex-direction: column;
   align-items: center;

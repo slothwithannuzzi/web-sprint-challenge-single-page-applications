@@ -5,6 +5,7 @@ import * as yup from 'yup'
 import Home from './components/Home'
 import PizzaForm from './components/PizzaForm'
 import { schema } from './components/formSchema'
+import axios from 'axios'
 
 const initialValues = {
   //name for order
@@ -48,15 +49,18 @@ const App = () => {
     }))
     .catch(err => setErrors({
       ...errors,
-      [name]: value
+      [name]: err.errors[0]
     }))
     setValues({
       ...values,
       [name]: value
     })
   }
+
   const addOrder = order => {
-    setPizzas([...pizzas, order])
+    axios.post('https://reqres.in/api/orders')
+    .then(({order}) => setPizzas([order, ...pizzas]))
+    .catch(err => console.log('Error posting new friend:', err))
   }
 
   const formSubmit = () => {
@@ -72,7 +76,7 @@ const App = () => {
       }
     })
     const newPizza = {
-      name: values.name,
+      name: values.name.trim(),
       size: values.size,
       sauce: values.sauce,
       glutenFree: values.glutenFree,
@@ -105,7 +109,12 @@ const App = () => {
         <Home/>
       </Route>
       <Route path = '/pizza'>
-        <PizzaForm values = {values} change ={inputChange} submit = {formSubmit} disabled = {disabled} errors = {errors}/>
+        <PizzaForm 
+        values = {values} 
+        change ={inputChange} 
+        submit = {formSubmit} 
+        disabled = {disabled} 
+        errors = {errors}/>
       </Route>
     </Switch>
 

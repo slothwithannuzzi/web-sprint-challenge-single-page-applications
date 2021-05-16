@@ -17,7 +17,7 @@ export default function Home() {
       />
       <button
         onClick={routeToPizza}
-        className='pizza-button'
+        id = 'order-pizza'
       >
         Pizza?
       </button>
