@@ -56,9 +56,13 @@ const App = () => {
       [name]: value
     })
   }
-
-  const addOrder = order => {
-    axios.post('https://reqres.in/api/orders')
+  const getOrders = () => {
+    axios.get('https://reqres.in/api/orders')
+    .then(({data}) => setPizzas(data))
+    .catch(err => console.log('Error getting orders', err))
+  }
+  const addOrder = newOrder => {
+    axios.post('https://reqres.in/api/orders', newOrder)
     .then(({order}) => setPizzas([order, ...pizzas]))
     .catch(err => console.log('Error posting new friend:', err))
   }
@@ -93,6 +97,10 @@ const App = () => {
     schema.isValid(values)
     .then(valid => setDisabled(!valid))
   }, [values])
+  
+  // useEffect(() => {
+  //   getOrders()
+  // },[])
 
   return (
    <div>
