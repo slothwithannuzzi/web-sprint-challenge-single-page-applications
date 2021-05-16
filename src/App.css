@@ -77,10 +77,24 @@ h1 {
 .pizza-form {
   display:flex;
   flex-direction: column;
+  align-items: center;
 }
 .toppings-container {
   display:flex;
   flex-direction: column;
+}
+
+#order-button {
+  margin: 10px;
+  padding: 10px;
+  background-color: goldenrod;
+  border: 2px solid red;
+}
+#order-button:hover:enabled {
+  background-color: yellow;
+}
+#order-button:disabled{
+  opacity: 0.6;
 }
 
 @keyframes App-logo-spin {
